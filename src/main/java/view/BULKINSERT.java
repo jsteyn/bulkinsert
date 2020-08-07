@@ -35,12 +35,12 @@ public class BULKINSERT {
 		Options options = new Options();
 		CommandLineParser parser = new DefaultParser();
 
-		Option t = Option.builder("t").longOpt("table").required().hasArg().desc("Table to be populated").build();
-		Option f = Option.builder("f").longOpt("file").required().hasArg().desc("CSV file to populate from").build();
-		Option d = Option.builder("d").longOpt("database").required(true).hasArg().desc("Database").build();
-		Option U = Option.builder("U").longOpt("user").required(true).hasArg().desc("Username").build();
-		Option P = Option.builder("P").longOpt("password").required(true).hasArg().desc("Password").build();
-		Option s = Option.builder("s").longOpt("server").required(false).hasArg().desc("Server").build();
+		Option t = Option.builder("t").longOpt("table").required(true).hasArg().desc("*Table to be populated").build();
+		Option f = Option.builder("f").longOpt("file").required(true).hasArg().desc("*CSV file to populate from").build();
+		Option d = Option.builder("d").longOpt("database").required(true).hasArg().desc("*Database").build();
+		Option U = Option.builder("U").longOpt("user").required(true).hasArg().desc("*Username").build();
+		Option P = Option.builder("P").longOpt("password").required(true).hasArg().desc("*Password").build();
+		Option s = Option.builder("s").longOpt("server").required(true).hasArg().desc("*Server").build();
 		Option p = Option.builder("p").longOpt("port").required(false).hasArg().desc("Port (default=1433)").build();
 		Option D = Option.builder("D").longOpt("delim").required(false).hasArg().desc("Delimiter (default=,)").build();
 		Option b = Option.builder("b").longOpt("batch").required(false).hasArg().desc("Batch size (default=100)").build();
@@ -137,15 +137,9 @@ public class BULKINSERT {
 						while (sc.hasNext()) {
 							// Read a line from the CSV file
 							String[] tokens = sc.nextLine().split(delim, -1);
-//						for (int i = 0; i < tokens.length; i++) {
-//							if (tokens[i].equals("")) System.out.print("empty\t");
-//							else if (tokens[i].equals(null)) System.out.print("null\t");
-//							else System.out.print(tokens[i] + "\t"); // Print column contents
-//						}
 
 							for (int i = 0; i < numberOfValues; i++) {
 								String columnName = columnNames[i].replace(" ", "_").replace("-", "");
-								//System.out.print(HM_SQLDataTypes.getType(tableDescription.get(columnName)) + "\t");
 								if (tokens[i].equals("")) statement.setNull(i + 1, tableDescription.get(columnName));
 								else
 									switch (HM_SQLDataTypes.getType(tableDescription.get(columnName))) {
@@ -185,7 +179,6 @@ public class BULKINSERT {
 								statement.executeBatch();
 								count = 0;
 							}
-//						statement.executeUpdate();
 						}
 						if (count > 0) {
 							statement.executeBatch();
@@ -200,7 +193,7 @@ public class BULKINSERT {
 				}
 			} catch(ParseException e){
 				HelpFormatter formatter = new HelpFormatter();
-				formatter.printHelp("java -cp SQLServerThing.jar view.SQLDatabaseConnection", options);
+				formatter.printHelp("java -cp Bulkinsert.jar view.BULKINSERT\nOptions shown with * are required.", options);
 			}
 
 		}
