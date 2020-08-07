@@ -1,5 +1,6 @@
 # BULKINSERT utility for MSSql server
 
+## Why
 You might want to tell me that there already is a bulkinsert sql command for MS-Sql server but here is the problem I ran into.
 
 I needed to populate a database that is running in a docker container (Linux) on a VM somewhere in the cloud. The bulk insert utility insisted that the data be on drive C:\ which, obviously, does not exist on Linux. It did seem to recognise the root of the filesystem as C:\ but, again obviously, I did not want to copy my data files into the root of the docker container. 
@@ -11,4 +12,22 @@ In the meantime I did manage to use the bulkinsert to populate the database from
 With my bulkinsert utility now written and with the help of OpenRefine, I was able to clean up the data and get it inserted into the database.
 
 So now you know why I had to re-invent the wheel - or at least make one that can actually get the job done.
+
+## How
+
+This bulkinsert is written in Java and it is a command line utility.  
+
+```
+usage: java -cp Bulkinsert.jar view.BULKINSERT
+Options shown with * are required.
+ -b,--batch <arg>      Batch size (default=100)
+ -d,--database <arg>   *Database
+ -D,--delim <arg>      Delimiter (default=,)
+ -f,--file <arg>       *CSV file to populate from
+ -P,--password <arg>   *Password
+ -p,--port <arg>       Port (default=1433)
+ -s,--server <arg>     *Server
+ -t,--table <arg>      *Table to be populated
+ -U,--user <arg>       *Username
+```
 
