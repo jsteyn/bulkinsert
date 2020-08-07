@@ -43,7 +43,7 @@ public class BULKINSERT {
 		Option s = Option.builder("s").longOpt("server").required(false).hasArg().desc("Server").build();
 		Option p = Option.builder("p").longOpt("port").required(false).hasArg().desc("Port (default=1433)").build();
 		Option D = Option.builder("D").longOpt("delim").required(false).hasArg().desc("Delimiter (default=,)").build();
-		Option b = Option.builder("b").longOpt("battch").required(false).hasArg().desc("Batch size (default=100)").build();
+		Option b = Option.builder("b").longOpt("batch").required(false).hasArg().desc("Batch size (default=100)").build();
 
 		options.addOption(t);
 		options.addOption(f);
